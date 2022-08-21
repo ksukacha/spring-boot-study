@@ -3,6 +3,8 @@ package com.kska.springbootstudy.controllers;
 import com.kska.springbootstudy.models.Note;
 import com.kska.springbootstudy.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,32 +28,36 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getAllNotes() {
-        return noteService.getAllNotes();
+    public ResponseEntity<List<Note>> getAllNotes() {
+        return ResponseEntity.ok().body(noteService.getAllNotes());
     }
 
     @GetMapping("/{id}")
-    public Note getNoteById(@PathVariable("id") String id) {
-        return noteService.getNoteById(id);
+    public ResponseEntity<Note> getNoteById(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(noteService.getNoteById(id));
     }
 
     @PostMapping
-    public void addNote(@RequestBody Note note) {
+    public ResponseEntity<Void> addNote(@RequestBody Note note) throws Exception {
         noteService.addNote(note);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")
-    public void updateNote(@PathVariable("id") String id, @RequestBody Note updateNote) {
+    public ResponseEntity<Void> updateNote(@PathVariable("id") String id, @RequestBody Note updateNote) {
         noteService.updateNote(id, updateNote);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteNoteById(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteNoteById(@PathVariable("id") String id) {
         noteService.removeNoteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping
-    public void deleteAllNotes() {
+    public ResponseEntity<Void> deleteAllNotes() {
         noteService.removeAllNotes();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
