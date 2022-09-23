@@ -33,7 +33,7 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Note> getNoteById(@PathVariable("id") String id) {
+    public ResponseEntity<Note> getNoteById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok().body(noteService.getNoteById(id));
     }
 
@@ -44,13 +44,13 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateNote(@PathVariable("id") String id, @RequestBody Note updateNote) {
+    public ResponseEntity<Void> updateNote(@PathVariable("id") Integer id, @RequestBody Note updateNote) {
         noteService.updateNote(id, updateNote);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNoteById(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteNoteById(@PathVariable("id") Integer id) {
         noteService.removeNoteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

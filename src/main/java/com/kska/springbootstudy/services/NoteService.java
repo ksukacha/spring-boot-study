@@ -5,15 +5,15 @@ import com.kska.springbootstudy.models.Note;
 import java.util.List;
 
 public interface NoteService {
-    Note getNoteById(String id);
+    Note getNoteById(Integer id);
 
     List<Note> getAllNotes();
 
     void addNote(Note note);
 
-    void updateNote(String id, Note updated);
+    void updateNote(Integer id, Note updated);
 
-    void removeNoteById(String id);
+    void removeNoteById(Integer id);
 
     void removeAllNotes();
 }

@@ -44,7 +44,7 @@ class NoteControllerTest {
     @Test
     @Order(2)
     public void whenAddNote_statusShouldBeCreated() {
-        Note note = new Note("testId", "testNoteName", "testNoteDescr");
+        Note note = new Note(3, "testNoteName", "testNoteDescr");
         ResponseEntity<Void> addedNoteResponse = addNote(note);
         assertThat(addedNoteResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
@@ -52,7 +52,7 @@ class NoteControllerTest {
     @Test
     @Order(3)
     public void whenRemoveNote_statusShouldBeNoContent() {
-        ResponseEntity<Void> removedNoteResponse = removeNote("testId");
+        ResponseEntity<Void> removedNoteResponse = removeNote(3);
         assertThat(removedNoteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
@@ -61,7 +61,7 @@ class NoteControllerTest {
     public void whenAddNoteAndThenRemoveNote_sizeOfAllNotesShouldBeSame() {
         int originalSize = getCurrentNoteListSize();
         assertThat(originalSize != -1);
-        Note note = new Note("testId2", "testNoteName2", "testNoteDescr2");
+        Note note = new Note(3, "testNoteName2", "testNoteDescr2");
         addNote(note);
         int newSize = getCurrentNoteListSize();
         assertThat(newSize == originalSize + 1);
@@ -95,7 +95,7 @@ class NoteControllerTest {
         return this.restTemplate.postForEntity(getPath(), note, Void.class);
     }
 
-    private ResponseEntity<Void> removeNote(String id) {
+    private ResponseEntity<Void> removeNote(Integer id) {
         return this.restTemplate.exchange(getPath() + ID_PATH_VARIABLE,
                 HttpMethod.DELETE,
                 null,
